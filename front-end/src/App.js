@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { ApplicationLinks, DefaultPage } from "./configurations/AppConfig";
+import Navigation from "./components/NavBar";
+import { BrowserRouter, Route } from "react-router-dom";
+import Logo from "./configurations/main-logo.png";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <header className="header">
+          <div className="header__logo-container">
+            <img src={Logo} alt="neumont logo" className="header__logo" />
+          </div>
+          <Navigation links={ApplicationLinks} />
+        </header>
+        <Route path="/" exact component={DefaultPage} />
+        {ApplicationLinks.map(({ link, display }) => (
+          <Route key={link} path={link} exact component={display} />
+        ))}
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

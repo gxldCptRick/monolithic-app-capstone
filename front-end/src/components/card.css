@@ -1,0 +1,52 @@
+.card {
+  background: yellow;
+  display: flex;
+  flex-direction: row;
+  margin: 10px auto;
+  width: 70%;
+}
+
+.card--flipped {
+  flex-direction: row-reverse;
+}
+
+.round-upper-left {
+  border-top-left-radius: 40px;
+}
+
+a {
+  transition: background 0.2s ease 0s;
+}
+
+.card__link {
+  padding: 10px;
+  text-decoration: none;
+  background: white;
+  margin: 100px;
+}
+
+.card__link:hover {
+  background: green;
+}
+
+.card__text {
+  flex: 1;
+  width: 100%;
+}
+
+.card__header {
+  padding: 10px 50px;
+}
+
+.card__description {
+  padding: 5px 30px;
+}
+
+.card__image-frame {
+  flex: 1;
+  width: 100%;
+}
+
+.card__image {
+  width: 100%;
+}

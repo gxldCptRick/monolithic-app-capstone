@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "LoginSegment.css";
+import "./LoginSegment.css";
 
 export default class LoginSegment extends Component {
   constructor(props) {
@@ -26,7 +26,9 @@ export default class LoginSegment extends Component {
     return (
       <form className="login-form" onSubmit={this.onSubmit}>
         <div className="login-form__section">
-          <label htmlFor="username">Username: </label>
+          <label className="login-form__input-label" htmlFor="username">
+            Username{" "}
+          </label>
           <input
             name="username"
             className="login-form__input-field"
@@ -36,7 +38,9 @@ export default class LoginSegment extends Component {
           />
         </div>
         <div className="login-form__section">
-          <label htmlFor="password">Password: </label>
+          <label className="login-form__input-label" htmlFor="password">
+            Password{" "}
+          </label>
           <input
             className="login-form__input-field"
             type="password"
@@ -45,6 +49,7 @@ export default class LoginSegment extends Component {
             onChange={this.onPasswordChanged}
           />
         </div>
+        <input className="login-form__submit" type="submit" value="login" />
       </form>
     );
   }

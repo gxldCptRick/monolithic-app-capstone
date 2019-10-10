@@ -1,8 +1,10 @@
 import HomePage from "../pages/Home";
+import LoginPage from "../pages/LoginPage";
 
 export const DefaultPage = HomePage;
 export const ApplicationLinks = [
-  { link: "/home", name: "Home", display: HomePage }
+  { link: "/home", name: "Home", display: HomePage },
+  { link: "/login", name: "Login", display: LoginPage }
 ];
 
 // Cards Can Have These Props

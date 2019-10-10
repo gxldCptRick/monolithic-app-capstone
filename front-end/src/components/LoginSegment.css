@@ -1,0 +1,23 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form__section {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+.login-form__input-field {
+  margin: 0 30px;
+  width: 100px;
+}
+
+.login-form__input-label {
+  width: 100px;
+}
+
+.login-form__submit {
+  margin: 0 30px;
+}

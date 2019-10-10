@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Card from "../components/Card";
+import { Link } from "react-router-dom";
 import { HomePageCards } from "../configurations/AppConfig";
 
 export default class HomePage extends Component {
@@ -9,9 +10,9 @@ export default class HomePage extends Component {
         <h1 className="page-title">Welcome To Neumont</h1>
         {HomePageCards.map(c => (
           <Card {...c} key={c.title}>
-            <a className="card__link" href="https://apply.neumont.edu/">
+            <Link className="card__link" to="login">
               Apply Now
-            </a>
+            </Link>
           </Card>
         ))}
       </main>

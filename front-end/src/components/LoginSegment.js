@@ -22,9 +22,19 @@ export default class LoginSegment extends Component {
     this.setState({ password });
 
   render() {
+    let { title = "" } = this.props;
     let { username, password } = this.state;
+    let titleParts = title.split(" ");
+    let lastIndex = titleParts.length - 1;
+    let nonHighlighted = titleParts
+      .slice(0, lastIndex)
+      .reduce((agg, next) => agg + " " + next);
+    let highLightedPart = titleParts[lastIndex];
     return (
       <form className="login-form" onSubmit={this.onSubmit}>
+        <h2 className="register-modal__title">
+          {nonHighlighted} <span className="bold">{highLightedPart}</span>
+        </h2>
         <div className="login-form__section">
           <label className="login-form__input-label" htmlFor="username">
             Username{" "}

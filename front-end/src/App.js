@@ -17,7 +17,7 @@ class App extends Component {
         </header>
         <Route path="/" exact component={DefaultPage} />
         {ApplicationLinks.map(({ link, display }) => (
-          <Route key={link} path={link} exact component={display} />
+          <Route key={link} path={link} component={display} />
         ))}
       </BrowserRouter>
     );

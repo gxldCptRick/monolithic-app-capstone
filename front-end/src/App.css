@@ -1,3 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700,800&display=swap");
+
+p,
+h1,
+h2,
+h3,
+a,
+label {
+  font-family: "Open Sans", sans-serif;
+}
+
 .header {
   display: flex;
   flex-direction: row;
@@ -35,6 +46,8 @@
   background: #c001af;
   padding: 10px;
   flex: 1;
+  text-align: center;
+  text-decoration: none;
 }
 
 .nav__link:hover {
@@ -49,3 +62,11 @@
   font-weight: 900;
 }
 
+.page-title {
+  margin: 0px 0px;
+  width: 70%;
+}
+
+.page-description {
+  margin: 2% 0;
+}

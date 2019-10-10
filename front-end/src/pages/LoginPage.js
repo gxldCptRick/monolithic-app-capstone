@@ -7,8 +7,8 @@ export default class Login extends Component {
   render() {
     return (
       <main className="flex login-page-root">
-        <h1>Welcome!</h1>
-        <p>
+        <h1 className="page-title">Welcome!</h1>
+        <p className="page-description">
           Thank you for your interest in attending Neumont College of Computer
           Science. Use this portal to complete all the required steps for your
           application as well as your enrollment.{" "}
@@ -30,8 +30,8 @@ export default class Login extends Component {
               Register
             </Link>
           </div>
+          <LoginForm title="Returning Users" onSubmit={this.handleFormSubmit} />
         </div>
-        <LoginForm onSubmit={this.handleFormSubmit} />
       </main>
     );
   }

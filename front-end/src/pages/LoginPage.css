@@ -1,37 +1,43 @@
 .register-modal {
   flex-grow: 1;
+  width: 0;
+  justify-content: center;
   border-right: 1px solid black;
+  background: green;
+  padding: 100px;
+  height: 200px;
 }
 
 .login-form {
   flex-grow: 1;
   display: block;
+  width: 0;
+  padding: 100px;
 }
 
 .login-page {
   display: flex;
+  width: 100%;
   flex-direction: row;
   background: red;
 }
 
-.register-modal__title {
-  padding: 30px;
-}
 
-.register-modal__description {
-  padding: 50px;
-}
 
 .register-modal__register-link {
-  padding: 20px;
+  padding: 10px 0px;
   background: yellow;
   text-align: center;
   display: block;
 }
 
+.register-modal__register-link:hover {
+  background: green;
+}
+
 .login-page-root {
   flex-direction: column;
   background: blue;
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
 }

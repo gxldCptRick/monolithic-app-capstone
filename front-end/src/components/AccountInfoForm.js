@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 export default class AccountInfoForm extends Component {
   constructor(props) {
@@ -8,7 +9,8 @@ export default class AccountInfoForm extends Component {
       lastName: "",
       username: "",
       password: "",
-      passwordConfirmation: ""
+      passwordConfirmation: "",
+      moveNext: false
     };
   }
 
@@ -37,9 +39,12 @@ export default class AccountInfoForm extends Component {
       lastName,
       username,
       password,
-      passwordConfirmation
+      passwordConfirmation,
+      moveNext
     } = this.state;
-    return (
+    return this.willMoveNext() ? (
+      <Redirect to="contact" />
+    ) : (
       <form onSubmit={this.onFormSubmit}>
         <h2>Account Information</h2>
         <div className="form__input-group">
@@ -47,6 +52,8 @@ export default class AccountInfoForm extends Component {
           <input
             className="for__field-input"
             required
+            minLength="2"
+            pattern="\\w+"
             name="firstName"
             value={firstName}
             onChange={this.generateOnValueChanged("firstName")}
@@ -57,7 +64,9 @@ export default class AccountInfoForm extends Component {
           <input
             className="for__field-input"
             required
+            minLength="2"
             name="lastName"
+            pattern="\\w+"
             value={lastName}
             onChange={this.generateOnValueChanged("lastName")}
           />
@@ -67,7 +76,9 @@ export default class AccountInfoForm extends Component {
           <input
             className="for__field-input"
             required
+            minLength="5"
             name="username"
+            pattern="\\w+"
             value={username}
             onChange={this.generateOnValueChanged("username")}
           />
@@ -77,6 +88,7 @@ export default class AccountInfoForm extends Component {
           <input
             className="for__field-input"
             required
+            minLength="5"
             type="password"
             name="password"
             value={password}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { HashRouter, Route } from "react-router-dom";
-import AccountInfo from "../components/AccountInfoForm";
+import AccountInfo from "../components/forms/AccountInfoForm";
 import HigherOrderWrapper from "../components/HighOrderWrapper";
 
 export default class Registration extends Component {
@@ -10,7 +10,8 @@ export default class Registration extends Component {
         <h1>Register Your Account</h1>
         <HashRouter>
           <Route
-            path="/account"
+            path="/"
+            exact
             component={HigherOrderWrapper(AccountInfo, {})}
           />
         </HashRouter>

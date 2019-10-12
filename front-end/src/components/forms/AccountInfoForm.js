@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
+import "./form.css";
+
 export default class AccountInfoForm extends Component {
   constructor(props) {
     super(props);
@@ -33,14 +35,17 @@ export default class AccountInfoForm extends Component {
       onSubmit(this.state);
     }
   };
+
+  willMoveNext() {
+    return false;
+  }
   render() {
     let {
       firstName,
       lastName,
       username,
       password,
-      passwordConfirmation,
-      moveNext
+      passwordConfirmation
     } = this.state;
     return this.willMoveNext() ? (
       <Redirect to="contact" />
@@ -48,7 +53,9 @@ export default class AccountInfoForm extends Component {
       <form onSubmit={this.onFormSubmit}>
         <h2>Account Information</h2>
         <div className="form__input-group">
-          <label className="form__field-label" htmlFor="firstName" />
+          <label className="form__field-label" htmlFor="firstName">
+            First Name *
+          </label>
           <input
             className="for__field-input"
             required
@@ -60,7 +67,9 @@ export default class AccountInfoForm extends Component {
           />
         </div>
         <div className="form__input-group">
-          <label className="form__field-label" htmlFor="lastName" />
+          <label className="form__field-label" htmlFor="lastName">
+            Last name *
+          </label>
           <input
             className="for__field-input"
             required
@@ -72,7 +81,9 @@ export default class AccountInfoForm extends Component {
           />
         </div>
         <div className="form__input-group">
-          <label className="form__field-label" htmlFor="username" />
+          <label className="form__field-label" htmlFor="username">
+            Username *
+          </label>
           <input
             className="for__field-input"
             required
@@ -84,7 +95,9 @@ export default class AccountInfoForm extends Component {
           />
         </div>
         <div className="form__input-group">
-          <label className="form__field-label" htmlFor="password" />
+          <label className="form__field-label" htmlFor="password">
+            Password *
+          </label>
           <input
             className="for__field-input"
             required
@@ -96,7 +109,9 @@ export default class AccountInfoForm extends Component {
           />
         </div>
         <div className="form__input-group">
-          <label className="form__field-label" htmlFor="passwordConfirmation" />
+          <label className="form__field-label" htmlFor="passwordConfirmation">
+            Confirm Password *
+          </label>
           <input
             className="for__field-input"
             required
@@ -106,6 +121,11 @@ export default class AccountInfoForm extends Component {
             onChange={this.generateOnValueChanged("passwordConfirmation")}
           />
         </div>
+        <input
+          type="submit"
+          value="Save and Continue (Contact Information)"
+          disabled={!this.isStateValid()}
+        />
       </form>
     );
   }

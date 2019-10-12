@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import LoginForm from "../components/LoginSegment";
+import LoginForm from "../components/forms/LoginSegment";
 import "./LoginPage.css";
 export default class Login extends Component {
   handleFormSubmit = ({ username, password }) => {};

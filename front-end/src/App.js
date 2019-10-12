@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { ApplicationLinks, DefaultPage } from "./configurations/AppConfig";
+import {
+  ApplicationLinks,
+  ApplicationComponents,
+  DefaultPage
+} from "./configurations/AppConfig";
 import Navigation from "./components/NavBar";
 import { BrowserRouter, Route } from "react-router-dom";
 import Logo from "./configurations/main-logo.png";
@@ -16,7 +20,7 @@ class App extends Component {
           <Navigation links={ApplicationLinks} />
         </header>
         <Route path="/" exact component={DefaultPage} />
-        {ApplicationLinks.map(({ link, display }) => (
+        {ApplicationComponents.map(({ link, display }) => (
           <Route key={link} path={link} component={display} />
         ))}
       </BrowserRouter>

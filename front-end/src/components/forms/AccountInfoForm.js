@@ -1,12 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
+import Form from "./Form";
 
 import "./form.css";
 
-export default class AccountInfoForm extends Component {
+export default class AccountInfoForm extends Form {
   constructor(props) {
     super(props);
-    this.state = {
+    let json = localStorage.getItem("account");
+    let savedState = JSON.parse(json);
+    let defaultState = {
       firstName: "",
       lastName: "",
       username: "",
@@ -14,18 +17,16 @@ export default class AccountInfoForm extends Component {
       passwordConfirmation: "",
       moveNext: false
     };
-  }
-
-  generateOnValueChanged(propName) {
-    return ({ target: { value } }) => {
-      let newState = {};
-      newState[propName] = value;
-      this.setState(newState);
-    };
+    Object.assign(defaultState, savedState);
+    this.state = defaultState;
   }
 
   isStateValid() {
-    return false;
+    return true;
+  }
+
+  generateError() {
+    return "error";
   }
 
   onFormSubmit = e => {
@@ -33,99 +34,61 @@ export default class AccountInfoForm extends Component {
     let { onSubmit } = this.props;
     if (this.isStateValid()) {
       onSubmit(this.state);
+      this.setState({ moveNext: true });
+    } else {
+      alert(this.generateError());
     }
   };
 
   willMoveNext() {
-    return false;
+    return this.isStateValid() && this.state.moveNext;
   }
+
   render() {
-    let {
-      firstName,
-      lastName,
-      username,
-      password,
-      passwordConfirmation
-    } = this.state;
+    console.log("updated");
     return this.willMoveNext() ? (
       <Redirect to="contact" />
     ) : (
       <form onSubmit={this.onFormSubmit}>
         <h2>Account Information</h2>
-        <div className="form__input-group">
-          <label className="form__field-label" htmlFor="firstName">
-            First Name *
-          </label>
-          <input
-            className="for__field-input"
-            required
-            minLength="2"
-            pattern="\\w+"
-            name="firstName"
-            value={firstName}
-            onChange={this.generateOnValueChanged("firstName")}
-          />
-        </div>
-        <div className="form__input-group">
-          <label className="form__field-label" htmlFor="lastName">
-            Last name *
-          </label>
-          <input
-            className="for__field-input"
-            required
-            minLength="2"
-            name="lastName"
-            pattern="\\w+"
-            value={lastName}
-            onChange={this.generateOnValueChanged("lastName")}
-          />
-        </div>
-        <div className="form__input-group">
-          <label className="form__field-label" htmlFor="username">
-            Username *
-          </label>
-          <input
-            className="for__field-input"
-            required
-            minLength="5"
-            name="username"
-            pattern="\\w+"
-            value={username}
-            onChange={this.generateOnValueChanged("username")}
-          />
-        </div>
-        <div className="form__input-group">
-          <label className="form__field-label" htmlFor="password">
-            Password *
-          </label>
-          <input
-            className="for__field-input"
-            required
-            minLength="5"
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.generateOnValueChanged("password")}
-          />
-        </div>
-        <div className="form__input-group">
-          <label className="form__field-label" htmlFor="passwordConfirmation">
-            Confirm Password *
-          </label>
-          <input
-            className="for__field-input"
-            required
-            type="password"
-            name="passwordConfirmation"
-            value={passwordConfirmation}
-            onChange={this.generateOnValueChanged("passwordConfirmation")}
-          />
-        </div>
-        <input
-          type="submit"
-          value="Save and Continue (Contact Information)"
-          disabled={!this.isStateValid()}
-        />
+        {[
+          this.createFieldDisplayForGivenPropName({
+            required: true,
+            minLength: "2",
+            pattern: "[A-Z]+[a-z'\\-]+",
+            propName: "firstName",
+            displayName: "First Name"
+          }),
+          this.createFieldDisplayForGivenPropName({
+            required: true,
+            minLength: "2",
+            pattern: "[A-Z]+[a-z'\\-]+",
+            propName: "lastName",
+            displayName: "Last Name"
+          }),
+          this.createFieldDisplayForGivenPropName({
+            required: true,
+            minLength: "5",
+            pattern: "[A-Za-z'\\-]+",
+            propName: "username",
+            displayName: "Username"
+          }),
+          this.createFieldDisplayForGivenPropName({
+            type: "password",
+            required: true,
+            minLength: "5",
+            propName: "password",
+            displayName: "Password"
+          }),
+          this.createFieldDisplayForGivenPropName({
+            type: "password",
+            required: true,
+            minLength: "5",
+            propName: "passwordConfirmation",
+            displayName: "Confirm Password"
+          })
+        ]}
+        <input type="submit" value="Save and Continue (Contact Information)" />
       </form>
     );
   }

@@ -1,24 +1,21 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import Form from "./Form";
 
 import "./form.css";
 
 export default class AccountInfoForm extends Form {
   constructor(props) {
-    super(props);
-    let json = localStorage.getItem("account");
-    let savedState = JSON.parse(json);
-    let defaultState = {
+    super({ ...props, next: "/contact", saved: "account" });
+  }
+
+  createDefaultState() {
+    return {
       firstName: "",
       lastName: "",
       username: "",
       password: "",
-      passwordConfirmation: "",
-      moveNext: false
+      passwordConfirmation: ""
     };
-    Object.assign(defaultState, savedState);
-    this.state = defaultState;
   }
 
   isStateValid() {
@@ -29,26 +26,8 @@ export default class AccountInfoForm extends Form {
     return "error";
   }
 
-  onFormSubmit = e => {
-    e.preventDefault();
-    let { onSubmit } = this.props;
-    if (this.isStateValid()) {
-      onSubmit(this.state);
-      this.setState({ moveNext: true });
-    } else {
-      alert(this.generateError());
-    }
-  };
-
-  willMoveNext() {
-    return this.isStateValid() && this.state.moveNext;
-  }
-
-  render() {
-    console.log("updated");
-    return this.willMoveNext() ? (
-      <Redirect to="contact" />
-    ) : (
+  renderForm() {
+    return (
       <form onSubmit={this.onFormSubmit}>
         <h2>Account Information</h2>
         {[

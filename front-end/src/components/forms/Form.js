@@ -1,6 +1,23 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+
+class UndefinedError extends Error {
+  constructor() {
+    super("Not Implemented Error");
+  }
+}
 
 export default class Form extends Component {
+  constructor(props) {
+    super(props);
+    let savedState = props.saved ? localStorage.getItem(props.saved) : "";
+    let parsedState = JSON.parse(savedState);
+    this.state = Object.assign(parsedState, this.createDefaultState(), {
+      moveNext: false,
+      movePrevious: false
+    });
+  }
+
   createStateUpdateForPropName(propName) {
     return ({ target: { value } }) => {
       let updates = {};
@@ -9,10 +26,49 @@ export default class Form extends Component {
     };
   }
 
+  createDefaultState() {
+    throw new UndefinedError();
+  }
+
+  renderForm() {
+    throw new UndefinedError();
+  }
+
+  generateError() {
+    throw new UndefinedError("not implemented yet");
+  }
+
+  isStateValid() {
+    throw new UndefinedError();
+  }
+
+  render() {
+    let { next, previous } = this.props;
+    let { moveNext, movePrevious } = this.state;
+    if (moveNext) return <Redirect to={next} />;
+    if (movePrevious) return <Redirect to={previous} />;
+    return this.renderForm();
+  }
+
+  onFormSubmit = e => {
+    e.preventDefault();
+    let { onSubmit } = this.props;
+    if (this.isStateValid()) {
+      onSubmit(this.state);
+      this.setState({ moveNext: true });
+    } else {
+      alert(this.generateError());
+    }
+  };
+
+  onMovePrevious = e => {
+    this.setState({ movePrevious: true });
+  };
+
   createFieldDisplayForGivenPropName({
     propName,
-    type = "text",
     displayName,
+    type = "text",
     required = false,
     ...rest
   }) {

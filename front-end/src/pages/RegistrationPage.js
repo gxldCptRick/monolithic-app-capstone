@@ -2,7 +2,37 @@ import React, { Component } from "react";
 import { HashRouter, Route } from "react-router-dom";
 import AccountInfo from "../components/forms/AccountInfoForm";
 import ContactInfo from "../components/forms/ContactInfoForm";
+import AddressInfo from "../components/forms/AddressForm";
 import HigherOrderWrapper from "../components/HighOrderWrapper";
+
+const registrationParts = [
+  {
+    path: "/",
+    props: {
+      saved: "account",
+      next: "/contact"
+    },
+    component: AccountInfo
+  },
+  {
+    path: "/contact",
+    props: {
+      saved: "contact",
+      next: "/address",
+      previous: "/"
+    },
+    component: ContactInfo
+  },
+  {
+    path: "/address",
+    props: {
+      saved: "address",
+      next: "/helpful",
+      previous: "/contact"
+    },
+    component: AddressInfo
+  }
+];
 
 export default class Registration extends Component {
   render() {
@@ -10,31 +40,20 @@ export default class Registration extends Component {
       <main>
         <h1>Register Your Account</h1>
         <HashRouter>
-          <Route
-            path="/"
-            exact
-            component={HigherOrderWrapper(AccountInfo, {
-              next: "/contact",
-              saved: "account",
-              onSubmit: storage => {
-                console.log("submitting", storage);
-                localStorage.setItem("account", JSON.stringify(storage));
-              }
-            })}
-          />
-          <Route
-            path="/contact"
-            exact
-            component={HigherOrderWrapper(ContactInfo, {
-              next: "/address",
-              previous: "/",
-              saved: "contact",
-              onSubmit: storage => {
-                console.log("submitting", storage);
-                localStorage.setItem("contact", JSON.stringify(storage));
-              }
-            })}
-          />
+          {registrationParts.map(({ path, component, props }) => (
+            <Route
+              key={path}
+              path={path}
+              exact
+              component={HigherOrderWrapper(component, {
+                ...props,
+                onSubmit: data => {
+                  console.log("data-saved", data);
+                  localStorage.setItem(props.saved, JSON.stringify(data));
+                }
+              })}
+            />
+          ))}
         </HashRouter>
       </main>
     );

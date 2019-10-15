@@ -69,14 +69,30 @@ export default class Form extends Component {
     this.setState({ movePrevious: true });
   };
 
-  createFieldDisplayForGivenPropName({
+  createFieldDisplayForGivenPropName = ({
     propName,
     displayName,
     type = "text",
     required = false,
     ...rest
-  }) {
+  }) => {
     let propValue = this.state[propName];
+    if (type === "selection") {
+      let { selectionOptions } = rest;
+      return (
+        <select
+          value={propValue}
+          onChange={this.createStateUpdateForPropName(propName)}
+          {...rest}
+        >
+          {selectionOptions.map(({ value, display, id }) => (
+            <option key={id} value={value}>
+              {display}
+            </option>
+          ))}
+        </select>
+      );
+    }
     return (
       <div className="form__input-group" key={propName}>
         <label htmlFor={propName} className="for__field-label">
@@ -92,5 +108,5 @@ export default class Form extends Component {
         />
       </div>
     );
-  }
+  };
 }

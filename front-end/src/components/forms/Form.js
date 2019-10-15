@@ -12,7 +12,7 @@ export default class Form extends Component {
     super(props);
     let savedState = props.saved ? localStorage.getItem(props.saved) : "";
     let parsedState = JSON.parse(savedState);
-    this.state = Object.assign(parsedState, this.createDefaultState(), {
+    this.state = Object.assign(this.createDefaultState(), parsedState, {
       moveNext: false,
       movePrevious: false
     });
@@ -48,6 +48,10 @@ export default class Form extends Component {
     if (moveNext) return <Redirect to={next} />;
     if (movePrevious) return <Redirect to={previous} />;
     return this.renderForm();
+  }
+
+  setState(state, callback = () => console.log(this.state)) {
+    super.setState(state, callback);
   }
 
   onFormSubmit = e => {

@@ -4,10 +4,6 @@ import Form from "./Form";
 import "./form.css";
 
 export default class AccountInfoForm extends Form {
-  constructor(props) {
-    super({ ...props, next: "/contact", saved: "account" });
-  }
-
   createDefaultState() {
     return {
       firstName: "",

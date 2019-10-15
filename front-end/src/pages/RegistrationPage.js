@@ -14,6 +14,8 @@ export default class Registration extends Component {
             path="/"
             exact
             component={HigherOrderWrapper(AccountInfo, {
+              next: "/contact",
+              saved: "account",
               onSubmit: storage => {
                 console.log("submitting", storage);
                 localStorage.setItem("account", JSON.stringify(storage));
@@ -23,7 +25,15 @@ export default class Registration extends Component {
           <Route
             path="/contact"
             exact
-            component={HigherOrderWrapper(ContactInfo, {})}
+            component={HigherOrderWrapper(ContactInfo, {
+              next: "/address",
+              previous: "/",
+              saved: "contact",
+              onSubmit: storage => {
+                console.log("submitting", storage);
+                localStorage.setItem("contact", JSON.stringify(storage));
+              }
+            })}
           />
         </HashRouter>
       </main>

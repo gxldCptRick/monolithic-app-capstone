@@ -3,6 +3,7 @@ import { HashRouter, Route } from "react-router-dom";
 import AccountInfo from "../components/forms/AccountInfoForm";
 import ContactInfo from "../components/forms/ContactInfoForm";
 import AddressInfo from "../components/forms/AddressForm";
+import HelpfulInfo from "../components/forms/HelpfulForm";
 import HigherOrderWrapper from "../components/HighOrderWrapper";
 
 const registrationParts = [
@@ -31,6 +32,14 @@ const registrationParts = [
       previous: "/contact"
     },
     component: AddressInfo
+  },
+  {
+    path: "/helpful",
+    props: {
+      saved: "helpful",
+      previous: "/address"
+    },
+    component: HelpfulInfo
   }
 ];
 

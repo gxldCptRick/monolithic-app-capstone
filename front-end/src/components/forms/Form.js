@@ -81,9 +81,10 @@ export default class Form extends Component {
       let { selectionOptions } = rest;
       return (
         <select
+          key={propName}
           value={propValue}
           onChange={this.createStateUpdateForPropName(propName)}
-          {...rest}
+          required={required}
         >
           {selectionOptions.map(({ value, display, id }) => (
             <option key={id} value={value}>

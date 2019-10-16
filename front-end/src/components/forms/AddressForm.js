@@ -4,11 +4,11 @@ import { states } from "../../configurations/States";
 
 export default class AddressForm extends Form {
   createDefaultState() {
-    return { lineOne: "", lineTwo: "", city: "", state: "" };
+    return { lineOne: "", lineTwo: "", city: "", state: "", zipCode: "" };
   }
 
   isStateValid() {
-    return false;
+    return true;
   }
 
   renderForm() {
@@ -20,13 +20,13 @@ export default class AddressForm extends Form {
             displayName: "Line 1",
             required: true,
             pattern:
-              "((\\d{1,4} ?[nNwWsSeE]? \\d{0,4} [nNwWsSeE]?)|( ?[a-zA-z]+)+)"
+              "(([0-9]{1,4} ?[nNwWsSeE] [0-9]{0,4} ?[nNwWsSeE]?)|( ?[a-zA-z]+)+)"
           },
           {
             propName: "lineTwo",
             displayName: "Line 2",
             pattern:
-              "((\\d{1,4} ?[nNwWsSeE]? \\d{0,4} ?[nNwWsSeE]?)|( ?[a-zA-z]+)+)"
+              "(([0-9]{1,4} ?[nNwWsSeE] [0-9]{0,4} ?[nNwWsSeE]?)|( ?[a-zA-z]+)+)"
           },
           {
             propName: "city",
@@ -39,6 +39,12 @@ export default class AddressForm extends Form {
             required: true,
             type: "selection",
             selectionOptions: states.map(s => ({ value: s, display: s, id: s }))
+          },
+          {
+            propName: "zipCode",
+            displayName: "Postal Code",
+            required: true,
+            pattern: "[0-9]{5} ?-? ?([0-9]{4})?"
           }
         ].map(this.createFieldDisplayForGivenPropName)}
         <input type="submit" value="Next (Helpful Information)" />

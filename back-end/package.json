@@ -1,0 +1,18 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "this is a simple project that will be used to access a backend data that is stored locally",
+  "main": "index.js",
+  "repository": "null",
+  "author": "Andres Hermilo Carrera Reynaga",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/core": "^7.6.4"
+  }
+}

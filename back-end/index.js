@@ -1,11 +1,12 @@
 import Express from "express";
-import { port, StudentPaths } from "./src/config/mainConfig";
+import BodyParser from "body-parser";
+import { port, baseUrl, logger } from "./src/config/mainConfig";
+import { studentRoutes } from "./src/routers/student";
+import ExpressPino from "express-pino-logger";
 const app = Express();
 
-app.get("/student", (req, res) => {
-  let obj = Object.assign({}, StudentPaths);
-  Object.keys(obj).forEach(k => (obj[k].path = `${req.baseUrl}${obj[k].path}`));
-  res.status(200).json(obj);
-});
+app.use(ExpressPino({ logger }));
+app.use(BodyParser.json());
+app.use("/api/student", studentRoutes);
 
-app.listen(port, () => console.log(`listening on port ${port}`));
+app.listen(port, () => logger.debug(`listening on port ${port}`));

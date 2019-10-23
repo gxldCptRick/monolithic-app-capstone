@@ -1,5 +1,12 @@
 import Express from "express";
 import Compress from "compression";
+import PinoExpress from "express-pino-logger";
+import BodyParser from "body-parser";
+import { StudentRoutes } from "./routers/StudentRoutes";
 const app = Express();
+app.use(PinoExpress({ autoLogging: true }));
 app.use(Compress());
 app.use(Express.static("public"));
+app.use(BodyParser.json());
+app.use("/api", StudentRoutes);
+app.listen();

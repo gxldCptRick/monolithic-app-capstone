@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.neumont.authenticationservice.models.Login;
 import edu.neumont.authenticationservice.models.ResponseObject;
+import edu.neumont.authenticationservice.models.ResultStatus;
+import edu.neumont.authenticationservice.models.Student;
+import edu.neumont.authenticationservice.rules.engines.RegistrationEngine;
 import edu.neumont.authenticationservice.validation.AuthenticationException;
 import edu.neumont.authenticationservice.validation.AuthorizationException;
 import edu.neumont.authenticationservice.validation.LoginValidator;
@@ -42,13 +45,20 @@ public class StudentLoginRouter implements Router {
     private Object handleStudentRegistrationRoute(Request req, Response res) throws IOException {
         var mapper = beanFactory.getBean(ObjectMapper.class);
         var response = new ResponseObject();
-        var loginValidator = beanFactory.getBean(LoginValidator.class);
-        var login = mapper.readValue(req.body(), Login.class);
-        response.setStatusCode(201);
-        res.status(201);
-        if(loginValidator.validateUserExists(login.getUsername())){
-            throw new AuthenticationException();
+        var engine = beanFactory.getBean(RegistrationEngine.class);
+        var student = mapper.readValue(req.body(), Student.class);
+
+        var result = engine.addStudent(student);
+
+        if(result.wasSuccessful()){
+            response.setStatusCode(201);
+            response.setBody("Saved Successfully");
+        }else{
+            response.setStatusCode(400);
+            response.setErrorMessage(result.getErrorMessages().stream().findFirst().orElse("An unknown error occurred."));
         }
+        res.status(response.getStatusCode());
+
         return response;
     }
 
@@ -57,6 +67,16 @@ public class StudentLoginRouter implements Router {
         var mapper = beanFactory.getBean(ObjectMapper.class);
         post("/login", "application/json", this::handleStudentLoginRoute, mapper::writeValueAsString);
         post("/", "application/json",this::handleStudentRegistrationRoute, mapper::writeValueAsString);
+        before("/:username", (req, res) -> {
+           var auth = req.headers("authorization");
+           if(!auth.startsWith("Bearer")){
+               halt(401, writeAsJson(ResultStatus.createErrorStatus("Authorization type must be Bearer")));
+           }
+           if(){
+
+           }
+        });
+        get("/:username", "application/json", this::handleGetStudentInfoRoute, mapper::writeValueAsString);
         exception(AuthenticationException.class, (e, req, res) -> {
             res.status(400);
             var responseObj = new ResponseObject();
@@ -67,6 +87,10 @@ public class StudentLoginRouter implements Router {
             var responseObj = new ResponseObject();
             res.body(writeAsJson(responseObj));
         });
+    }
+
+    private Object handleGetStudentInfoRoute(Request request, Response response) {
+        return null;
     }
 
     private String writeAsJson(Object value){

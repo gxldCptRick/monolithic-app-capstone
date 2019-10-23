@@ -1,11 +1,16 @@
 {
-	"folders": [
-		{
-			"path": "front-end"
-		},
-		{
-			"path": "back-end"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "front-end"
+    },
+    {
+      "path": "backend\\backend-authorization"
+    },
+    {
+      "path": "backend\\beffe-react-registration"
+    }
+  ],
+  "settings": {
+    "cSpell.words": ["pino"]
+  }
 }

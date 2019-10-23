@@ -96,11 +96,11 @@ export default class Form extends Component {
     }
     return (
       <div className="form__input-group" key={propName}>
-        <label htmlFor={propName} className="for__field-label">
+        <label htmlFor={propName} className="form__field-label">
           {displayName} {required ? "*" : ""}
         </label>
         <input
-          className="for__field-input"
+          className="form__field-input"
           required={required}
           type={type}
           value={propValue}

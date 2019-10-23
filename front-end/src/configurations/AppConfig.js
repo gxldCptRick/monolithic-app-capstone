@@ -8,8 +8,8 @@ export const ApplicationLinks = [
   { link: "/login", name: "Student Login", display: LoginPage }
 ];
 
-export const ApplicationComponents = [
-  { link: "/home", display: HomePage },
+  { liexport const ApplicationComponents = [
+nk: "/home", display: HomePage },
   { link: "/login", display: LoginPage },
   { link: "/register", display: RegisterPage }
 ];

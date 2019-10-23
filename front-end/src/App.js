@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import {
-  ApplicationLinks,
-  ApplicationComponents,
-  DefaultPage
-} from "./configurations/AppConfig";
+import * as Config from "./configurations/AppConfig";
 import Navigation from "./components/NavBar";
 import { BrowserRouter, Route } from "react-router-dom";
 import Logo from "./configurations/main-logo.png";
 import "./App.css";
+
+let { ApplicationComponents, ApplicationLinks, DefaultPage } = Config;
 
 class App extends Component {
   render() {

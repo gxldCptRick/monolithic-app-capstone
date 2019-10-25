@@ -15,15 +15,18 @@ import spark.Request;
 import spark.Response;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import static spark.Spark.*;
 
 public class StudentLoginRouter implements Router {
     private BeanFactory beanFactory;
+    private Logger logger;
 
     @Override
     public void initializeRoutes(BeanFactory beanFactory) {
         this.beanFactory = beanFactory;
+        logger = beanFactory.getBean(Logger.class);
     }
 
 
@@ -69,11 +72,11 @@ public class StudentLoginRouter implements Router {
         post("/", "application/json",this::handleStudentRegistrationRoute, mapper::writeValueAsString);
         before("/:username", (req, res) -> {
            var auth = req.headers("authorization");
+           var loginValidator = beanFactory.getBean(LoginValidator.class);
            if(!auth.startsWith("Bearer")){
                halt(401, writeAsJson(ResultStatus.createErrorStatus("Authorization type must be Bearer")));
            }
-           if(){
-
+           if(loginValidator.isValidToken(auth)){
            }
         });
         get("/:username", "application/json", this::handleGetStudentInfoRoute, mapper::writeValueAsString);

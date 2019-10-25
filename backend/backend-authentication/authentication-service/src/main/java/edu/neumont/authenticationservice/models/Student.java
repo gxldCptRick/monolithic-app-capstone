@@ -7,6 +7,8 @@ public class Student {
     private String lastName;
     private String phoneNumber;
     private String email;
+    private String address;
+    private String zipCode;
 
     public String getUsername() {
         return username;
@@ -54,5 +56,21 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

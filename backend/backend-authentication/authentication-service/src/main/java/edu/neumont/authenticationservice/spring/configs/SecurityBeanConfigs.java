@@ -12,4 +12,5 @@ public class SecurityBeanConfigs {
     public LoginFactory defaultFactory(){
         return new MessageDigestSecureRandomLoginFactory("MD5");
     }
+
 }

@@ -14,6 +14,6 @@ app.use(Express.static("public"));
 app.use(BodyParser.json());
 app.use("/api/student", StudentRoutes);
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(path.join(__dirname, "..", "/public/index.html")));
+    res.sendFile(path.resolve(path.join(__dirname, "..", "/public/index.html")));
 });
 app.listen(port, () => console.log(`listening on port ${port}`));

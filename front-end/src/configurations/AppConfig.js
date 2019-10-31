@@ -1,17 +1,24 @@
 import HomePage from "../pages/Home";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegistrationPage";
+import pino from "pino";
 
+const host = "localhost";
+const port = 3030;
+export const createDefaultLogger = () =>
+  pino({ level: "debug", browser: { asObject: true } });
+export const baseEndpoint = `http://${host}:${port}/api/`;
 export const DefaultPage = HomePage;
 export const ApplicationLinks = [
   { link: "/home", name: "Home", display: HomePage },
-  { link: "/login", name: "Student Login", display: LoginPage }
+  { link: "/login", name: "Student Login", display: LoginPage },
+  { link: "/apply/register", name: "Apply Now", display: RegisterPage }
 ];
 
 export const ApplicationComponents = [
   { link: "/home", display: HomePage },
   { link: "/login", display: LoginPage },
-  { link: "/register", display: RegisterPage }
+  { link: "/apply/register", display: RegisterPage }
 ];
 
 // Cards Can Have These Props
@@ -29,6 +36,7 @@ export const ApplicationComponents = [
 export const HomePageCards = [
   {
     title: "Join the Tech Side",
+    link: "/apply/register",
     description:
       "Submit your Application for Admission to secure your spot in our upcoming Fall 2019 cohort. By completing the application, you will also be considered for a Neumont merit scholarship. No separate application is required.",
     image: {

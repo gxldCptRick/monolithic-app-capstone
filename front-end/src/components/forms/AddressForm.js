@@ -47,7 +47,7 @@ export default class AddressForm extends Form {
             pattern: "[0-9]{5} ?-? ?([0-9]{4})?"
           }
         ].map(this.createFieldDisplayForGivenPropName)}
-        <input type="submit" value="Next (Helpful Information)" />
+        <input type="submit" value="Submit Application" />
       </form>
     );
   }

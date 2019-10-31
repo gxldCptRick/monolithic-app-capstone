@@ -10,7 +10,7 @@ export default class HomePage extends Component {
         <h1 className="page-title">Welcome To Neumont</h1>
         {HomePageCards.map(c => (
           <Card {...c} key={c.title}>
-            <Link className="card__link" to="login">
+            <Link className="card__link" to={c.link}>
               Apply Now
             </Link>
           </Card>

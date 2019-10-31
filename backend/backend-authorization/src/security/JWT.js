@@ -8,3 +8,25 @@ export const createLoginToken = async ({ body }) =>
     issuer: host,
     subject: "auth"
   });
+
+export const validateLoginToken = async ({ jwt }) =>
+  new Promise((res, rej) => {
+    JWT.verify(jwt, secret, (err, data) => {
+      if (err) {
+        rej(err);
+      } else {
+        res(true);
+      }
+    });
+  });
+
+export const parseToken = async ({ jwt }) =>
+  new Promise((res, rej) => {
+    JWT.verify(jwt, secret, (err, data) => {
+      if (err) {
+        rej(err);
+      } else {
+        res(data);
+      }
+    });
+  });

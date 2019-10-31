@@ -1,3 +1,4 @@
+import MongoDBTokenHandler from "../data-access/MongoDataAccess";
 export const routeDefinitions = {
   getInfo: {
     path: "/",
@@ -12,3 +13,5 @@ export const routeDefinitions = {
     method: "post"
   }
 };
+
+export const TokenHandler = new MongoDBTokenHandler();

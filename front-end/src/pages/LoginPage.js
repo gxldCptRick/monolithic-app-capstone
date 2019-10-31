@@ -1,11 +1,20 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import LoginForm from "../components/forms/LoginSegment";
 import "./LoginPage.css";
 export default class Login extends Component {
-  handleFormSubmit = ({ username, password }) => {};
+  constructor(props) {
+    super(props);
+    this.state = { loggedIn: false };
+  }
+  handleFormSubmit = ({ username, password }) => {
+    console.log("username:", username, ", password:", password);
+  };
   render() {
-    return (
+    let { loggedIn } = this.state;
+    return loggedIn ? (
+      <Redirect to="/degree" />
+    ) : (
       <main className="flex login-page-root">
         <h1 className="page-title">Welcome!</h1>
         <p className="page-description">
@@ -26,7 +35,10 @@ export default class Login extends Component {
               Begin your Application for Admission to Neumont by creating a user
               account.
             </p>
-            <Link className="register-modal__register-link" to="register">
+            <Link
+              className="register-modal__register-link"
+              to="/apply/register"
+            >
               Register
             </Link>
           </div>

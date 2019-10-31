@@ -6,7 +6,26 @@ import {
   rolesCollection
 } from "../config/mongoConfig";
 
-export default class MongoDataAccess extends StudentRoleAccess {
+import { createLoginToken, validateLoginToken } from "../security/JWT";
+
+export default class MongoDBTokenHandler {
+  async createToken({ username }) {
+    try {
+      const roles = await this.fetchRolesForUser({ username });
+      return await createLoginToken({ body: { username, roles } });
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+
+  async validateToken({ jwt }) {
+    try {
+      return await validateLoginToken({ jwt });
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+
   async fetchRolesForUser({ username }) {
     try {
       var connection = await MongoClient.connect(connection_uri);

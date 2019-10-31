@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { HashRouter, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import AccountInfo from "../components/forms/AccountInfoForm";
 import ContactInfo from "../components/forms/ContactInfoForm";
 import AddressInfo from "../components/forms/AddressForm";
-import HelpfulInfo from "../components/forms/HelpfulForm";
 import HigherOrderWrapper from "../components/HighOrderWrapper";
 
 const registrationParts = [
@@ -28,28 +27,46 @@ const registrationParts = [
     path: "/address",
     props: {
       saved: "address",
-      next: "/helpful",
       previous: "/contact"
     },
     component: AddressInfo
-  },
-  {
-    path: "/helpful",
-    props: {
-      saved: "helpful",
-      previous: "/address"
-    },
-    component: HelpfulInfo
   }
 ];
 
 export default class Registration extends Component {
   render() {
+    let {
+      match: { path: basePath }
+    } = this.props;
+    console.log(
+      registrationParts.map(
+        ({ path, props: { next, previous, ...rest }, ...basicRest }) => ({
+          path: basePath + path,
+          ...basicRest,
+          props: {
+            next: next ? basePath + next : undefined,
+            previous: previous ? basePath + previous : undefined,
+            ...rest
+          }
+        })
+      )
+    );
     return (
       <main>
         <h1>Register Your Account</h1>
-        <HashRouter>
-          {registrationParts.map(({ path, component, props }) => (
+        {registrationParts
+          .map(
+            ({ path, props: { next, previous, ...rest }, ...basicRest }) => ({
+              path: basePath + path,
+              ...basicRest,
+              props: {
+                next: next ? basePath + next : undefined,
+                previous: previous ? basePath + previous : undefined,
+                ...rest
+              }
+            })
+          )
+          .map(({ path, component, props }) => (
             <Route
               key={path}
               path={path}
@@ -63,7 +80,6 @@ export default class Registration extends Component {
               })}
             />
           ))}
-        </HashRouter>
       </main>
     );
   }

@@ -1,5 +1,10 @@
 import React from "react";
 import Form from "./Form";
+import {
+  isValidPassword,
+  isValidUsername,
+  isValidName
+} from "../../buisness_rules/Rules";
 
 import "./form.css";
 
@@ -15,11 +20,41 @@ export default class AccountInfoForm extends Form {
   }
 
   isStateValid() {
-    return true;
+    let {
+      firstName,
+      lastName,
+      username,
+      password,
+      passwordConfirmation
+    } = this.state;
+    return (
+      isValidName(firstName).success &&
+      isValidName(lastName).success &&
+      isValidPassword(password).success &&
+      isValidUsername(username).success &&
+      password === passwordConfirmation
+    );
   }
 
   generateError() {
-    return "error";
+    let {
+      firstName,
+      lastName,
+      username,
+      password,
+      passwordConfirmation
+    } = this.state;
+    let firstNameCheck = isValidName(firstName);
+    if (!firstNameCheck.success)
+      return firstNameCheck.message.replace("name", "first name");
+    let lastNameCheck = isValidName(lastName);
+    if (!lastNameCheck.success)
+      return lastNameCheck.message.replace("name", "last name");
+    let usernameCheck = isValidUsername(username);
+    if (!usernameCheck.success) return usernameCheck.message;
+    let passwordCheck = isValidPassword(password);
+    if (!passwordCheck.success) return passwordCheck.message;
+    if (password !== passwordConfirmation) return "Passwords did not match";
   }
 
   renderForm() {

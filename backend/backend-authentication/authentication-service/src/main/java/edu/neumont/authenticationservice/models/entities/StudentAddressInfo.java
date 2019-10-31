@@ -8,10 +8,12 @@ import javax.persistence.Id;
 public class StudentAddressInfo {
     @Id
     private String username;
-    private String email;
-    private String address;
-    @Column(name="phone_number")
-    private String phoneNumber;
+    @Column(name="first_street_address")
+    private String firstStreetAddress;
+    @Column(name="second_street_address")
+    private String secondStreetAddress;
+    private String city;
+    private String state;
     @Column(name="zip_code")
     private String zipCode;
 
@@ -23,22 +25,6 @@ public class StudentAddressInfo {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getZipCode() {
         return zipCode;
     }
@@ -47,11 +33,35 @@ public class StudentAddressInfo {
         this.zipCode = zipCode;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getFirstStreetAddress() {
+        return firstStreetAddress;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setFirstStreetAddress(String firstStreetAddress) {
+        this.firstStreetAddress = firstStreetAddress;
+    }
+
+    public String getSecondStreetAddress() {
+        return secondStreetAddress;
+    }
+
+    public void setSecondStreetAddress(String secondStreetAddress) {
+        this.secondStreetAddress = secondStreetAddress;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

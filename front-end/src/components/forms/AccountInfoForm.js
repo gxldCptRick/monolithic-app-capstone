@@ -19,7 +19,7 @@ export default class AccountInfoForm extends Form {
     };
   }
 
-  isStateValid() {
+  async isStateValid() {
     let {
       firstName,
       lastName,
@@ -31,12 +31,12 @@ export default class AccountInfoForm extends Form {
       isValidName(firstName).success &&
       isValidName(lastName).success &&
       isValidPassword(password).success &&
-      isValidUsername(username).success &&
+      (await isValidUsername(username).success) &&
       password === passwordConfirmation
     );
   }
 
-  generateError() {
+  async generateError() {
     let {
       firstName,
       lastName,
@@ -50,8 +50,12 @@ export default class AccountInfoForm extends Form {
     let lastNameCheck = isValidName(lastName);
     if (!lastNameCheck.success)
       return lastNameCheck.message.replace("name", "last name");
-    let usernameCheck = isValidUsername(username);
-    if (!usernameCheck.success) return usernameCheck.message;
+    try {
+      let usernameCheck = await isValidUsername(username);
+      if (!usernameCheck.success) return usernameCheck.message;
+    } catch (e) {
+      return Promise.reject(e);
+    }
     let passwordCheck = isValidPassword(password);
     if (!passwordCheck.success) return passwordCheck.message;
     if (password !== passwordConfirmation) return "Passwords did not match";

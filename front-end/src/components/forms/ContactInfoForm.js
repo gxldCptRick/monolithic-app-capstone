@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "./Form";
+import { isValidEmail, isValidPhone } from "../../buisness_rules/Rules";
 
 export default class ContactInfoForm extends Form {
   createDefaultState() {
@@ -10,12 +11,28 @@ export default class ContactInfoForm extends Form {
     };
   }
 
-  generateError() {
-    return "Bad Bad Man!!";
+  async generateError() {
+    let { email, phoneNumber, confirmEmail } = this.state;
+    let emailResult = isValidEmail(email);
+    if (!emailResult.success) {
+      return emailResult.message;
+    }
+    let phoneNumberResult = isValidPhone(phoneNumber);
+    if (!phoneNumberResult.success) {
+      return phoneNumberResult.message;
+    }
+    if (email === confirmEmail) return "Emails do not Match!!";
+
+    return "";
   }
 
-  isStateValid() {
-    return false;
+  async isStateValid() {
+    let { email, confirmEmail, phoneNumber } = this.state;
+    return (
+      isValidEmail(email).success &&
+      isValidPhone(phoneNumber).success &&
+      email === confirmEmail
+    );
   }
 
   renderForm() {

@@ -34,12 +34,12 @@ export default class Form extends Component {
     throw new UndefinedError();
   }
 
-  generateError() {
-    throw new UndefinedError("not implemented yet");
+  async generateError() {
+    return Promise.reject(new UndefinedError("not implemented yet"));
   }
 
-  isStateValid() {
-    throw new UndefinedError();
+  async isStateValid() {
+    return Promise.reject(new UndefinedError("not implemented yet"));
   }
 
   render() {
@@ -54,14 +54,19 @@ export default class Form extends Component {
     super.setState(state, callback);
   }
 
-  onFormSubmit = e => {
+  onFormSubmit = async e => {
     e.preventDefault();
     let { onSubmit } = this.props;
-    if (this.isStateValid()) {
-      onSubmit(this.state);
-      this.setState({ moveNext: true });
-    } else {
-      alert(this.generateError());
+    try {
+      if (await this.isStateValid()) {
+        onSubmit(this.state);
+        this.setState({ moveNext: true });
+      } else {
+        this.setState({ error: await this.generateError() });
+      }
+    } catch (error) {
+      let { logger = console } = this.props;
+      this.setState({ error }, () => logger.error(error));
     }
   };
 
